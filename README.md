@@ -30,9 +30,12 @@ class Chart extends Component {
 export default Chart
 ```
 
-And now include and use the created React component:
+And now include and use the created React component (dont forget to include the css):
 
 ```jsx
+import Chart from './chart'
+import 'frappe-charts/dist/frappe-charts.min.css'
+
 <Chart
   title="Test"
   data={{
