@@ -2585,13 +2585,9 @@ forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
 
-frappe-charts@tobiaslins/charts:
-  version "0.0.1"
-  resolved "https://codeload.github.com/tobiaslins/charts/tar.gz/24b389b12cba4d2859945383d277d81701cc3657"
-
-frappe-charts@tobiaslins/charts#support-react:
-  version "0.0.1"
-  resolved "https://codeload.github.com/tobiaslins/charts/tar.gz/c48761c9be0d84fe32d1f4547b80645fc908a073"
+frappe-charts@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/frappe-charts/-/frappe-charts-0.0.4.tgz#909f5a14720c67ad3539073865a6a5b63bbddef0"
 
 fresh@0.5.2:
   version "0.5.2"
