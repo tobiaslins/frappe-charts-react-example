@@ -5,7 +5,27 @@ import 'frappe-charts/dist/frappe-charts.min.css'
 
 import Chart from './chart'
 
+const randomData = () =>
+  Array.from({ length: 10 }, () => Math.floor(Math.random() * 100))
+
 class App extends Component {
+  state = {
+    datasets: [
+      {
+        color: 'light-blue',
+        values: randomData()
+      }
+    ]
+  }
+  randomize = () => {
+    this.setState({
+      datasets: [
+        {
+          values: randomData()
+        }
+      ]
+    })
+  }
   render() {
     return (
       <div className="App">
@@ -16,25 +36,27 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <Chart title="Test" data={{
-    labels: ["12am-3am", "3am-6am", "6am-9am", "9am-12pm",
-      "12pm-3pm", "3pm-6pm", "6pm-9pm", "9pm-12am"],
-
-    datasets: [
-      {
-        title: "Some Data", color: "light-blue",
-        values: [25, 40, 30, 35, 8, 52, 17, -4]
-      },
-      {
-        title: "Another Set", color: "violet",
-        values: [25, 50, -10, 15, 18, 32, 27, 14]
-      },
-      {
-        title: "Yet Another", color: "blue",
-        values: [15, 20, -3, -15, 58, 12, -17, 37]
-      }
-    ]
-  }}/>
+        <Chart
+          title="Bar Chart"
+          type="bar"
+          data={{
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            datasets: this.state.datasets
+          }}
+          onSelect={a => console.log(a.index)}
+        />
+        <button onClick={this.randomize}>Update Data</button>
+        <Chart
+          title="Line Chart"
+          type="line"
+          data={{
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            datasets: this.state.datasets
+          }}
+          show_dots={false}
+          heatline
+          region_fill
+        />
       </div>
     )
   }

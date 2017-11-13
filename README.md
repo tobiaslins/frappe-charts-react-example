@@ -1,36 +1,9 @@
 # Frappe Charts with React
 
-Create component as in chart.js
+Copy the react component as in `chart.js`
 
-```js
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Frappe from 'frappe-charts/dist/frappe-charts.min.esm'
-
-class Chart extends Component {
-  constructor(props) {
-    super(props)
-  }
-  componentDidMount() {
-    const { title, data, type = 'bar', height = 250 } = this.props
-    let chart = new Frappe({
-      parent: this.chart,
-      title,
-      data,
-      type,
-      height
-    })
-  }
-
-  render() {
-    return <div ref={chart => (this.chart = chart)} />
-  }
-}
-
-export default Chart
-```
-
-And now include and use the created React component (dont forget to include the css):
+And now include and use the created React component (dont forget to include the
+css):
 
 ```jsx
 import Chart from './chart'
@@ -49,7 +22,6 @@ import 'frappe-charts/dist/frappe-charts.min.css'
       '6pm-9pm',
       '9pm-12am'
     ],
-
     datasets: [
       {
         title: 'Some Data',
@@ -70,3 +42,32 @@ import 'frappe-charts/dist/frappe-charts.min.css'
   }}
 />
 ```
+
+## Configuring
+
+Every property of frappe-chart is set automatically if its set on the react
+component Example:
+
+```jsx
+...
+<Chart
+  title="Test"
+  type="line"
+  show_dots={false}
+  heatline
+  region_fill
+  data={{
+    labels: ['1'],
+    datasets: [
+      {
+        values: [1]
+      }
+    ]
+  }}
+/>
+```
+
+## Click handler
+
+If you provide a property called `onSelect` you will receive events on click
+(only barchart)
