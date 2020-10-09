@@ -1,61 +1,69 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-import Graph from "./Graph";
+import Graph from './Graph';
 
-const randomData = () =>
-  Array.from({ length: 10 }, () => Math.floor(Math.random() * 100));
+const randomData = () => Array.from({ length: 7 }, () => Math.floor(Math.random() * 10));
 
-class App extends Component {
-  state = {
-    datasets: [
-      {
-        color: "light-blue",
-        values: randomData()
-      }
-    ]
+const CreateExampleData = () => (
+  { labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    datasets: [{
+      name: 'Commits',
+      chartType: 'bar',
+      values: randomData(),
+    },
+    {
+      name: 'Coffees',
+      chartType: 'line',
+      values: randomData(),
+    }] }
+);
+
+const Types = ['bar', 'pie', 'percentage'];
+
+const App = () => {
+  const [data, SetData] = useState(CreateExampleData());
+
+  const updateValues = () => {
+    SetData(CreateExampleData());
+    console.log(data);
   };
-  randomize = () => {
-    this.setState({
-      datasets: [
-        {
-          values: randomData()
-        }
-      ]
-    });
-  };
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">React wrapper for frappe-charts</h1>
-        </header>
+
+  return (
+    <Root>
+      <Header>
+        <Title>React Wrapper for frappe-charts</Title>
+      </Header>
+      <button {...{ onClick: () => updateValues(), type: 'button' }}>
+        Update data !
+      </button>
+      { Types.map((x) => (
         <Graph
-          title="Bar Chart"
-          type="bar"
-          data={{
-            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-            datasets: this.state.datasets
-          }}
-          onSelect={a => console.log(a.index)}
+          {...{ title: `${x[0].toUpperCase() + x.substring(1)} chart`,
+            type: x,
+            key: x,
+            data }}
         />
-        <button onClick={this.randomize}>Update Data</button>
-        <Graph
-          title="Line Chart"
-          type="line"
-          data={{
-            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-            datasets: this.state.datasets
-          }}
-          show_dots={false}
-          heatline
-          region_fill
-        />
-      </div>
-    );
-  }
-}
+      ))}
+    </Root>
+  );
+};
+
+const Root = styled.div`
+text-align: center;
+`;
+
+const Header = styled.header`
+background: #252830;
+color: white;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 20px;
+`;
+
+const Title = styled.h1`
+margin-left: 30px;
+`;
 
 export default App;
