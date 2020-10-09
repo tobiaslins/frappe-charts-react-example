@@ -1,8 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import styled from 'styled-components';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+const StyledApp = styled(App)`
+margin: 0;
+padding: 0;
+font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+  "Helvetica Neue", Arial, sans-serif;
+`;
+
+ReactDOM.render(<StyledApp />, document.getElementById('root'));
