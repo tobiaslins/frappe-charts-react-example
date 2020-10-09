@@ -28,7 +28,8 @@ const App = () => (
       <Graph
         {...{ title: `${x[0].toUpperCase() + x.substring(1)} chart`,
           type: x,
-          data: ExampleData }}
+          key: x,
+          data: ExampleData, onSelect: () => console.log('Selected element!') }}
       />
     ))}
   </Root>

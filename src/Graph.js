@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Chart } from 'frappe-charts/dist/frappe-charts.min.esm';
 
-class Graph extends Component {
-  componentDidMount() {
-    const { title, data, type, height = 250, onSelect, ...rest } = this.props;
-    this.graph = new Chart(this.chart, {
+const Graph = ({ title, data, type, height = 250, onSelect, ...rest }) => {
+  const ref = useRef();
+  const [graph, setGraph] = useState();
+  useEffect(() => {
+    const newGraph = new Chart(ref.current, {
       title,
       data,
       type,
@@ -13,19 +14,15 @@ class Graph extends Component {
       is_navigable: !!onSelect,
       ...rest,
     });
-    if (onSelect) {
-      this.graph.parent.addEventListener('data-select', onSelect);
-    }
-  }
+    setGraph(newGraph);
+  }, [data]);
 
-  componentWillReceiveProps(props) {
-    this.graph.update(props.data);
-  }
-
-  render() {
-    return <div ref={(chart) => (this.chart = chart)} />;
-  }
-}
+  return (
+    <div>
+      <div {...{ ref, 'data-select': onSelect }} />
+    </div>
+  );
+};
 
 export default Graph;
 
