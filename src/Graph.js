@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Chart } from 'frappe-charts/dist/frappe-charts.min.esm';
 
-const Graph = ({ title, data, type, height = 250, onSelect, ...rest }) => {
+const Graph = ({ title, data, type, height = 250, onSelect, ...other }) => {
   const ref = useRef();
-  const [graph, setGraph] = useState();
   useEffect(() => {
     const newGraph = new Chart(ref.current, {
       title,
@@ -12,10 +11,9 @@ const Graph = ({ title, data, type, height = 250, onSelect, ...rest }) => {
       type,
       height,
       is_navigable: !!onSelect,
-      ...rest,
+      ...other,
     });
-    setGraph(newGraph);
-  }, [data]);
+  }, [data, height, other, title, type]);
 
   return (
     <div>

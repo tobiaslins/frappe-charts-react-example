@@ -1,39 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Graph from './Graph';
 
-const ExampleData = {
-  labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
-  datasets: [{
-    name: 'Some Data',
-    chartType: 'bar',
-    values: [25, 40, 30, 35, 8, 52, 17, -4],
-  },
-  {
-    name: 'Another Set',
-    chartType: 'bar',
-    values: [25, 50, -10, 15, 18, 32, 27, 14],
-  }],
-};
+const randomData = () => Array.from({ length: 7 }, () => Math.floor(Math.random() * 10));
 
-const Types = ['bar', 'line', 'pie', 'percentage'];
-
-const App = () => (
-  <Root>
-    <Header>
-      <Title>React Wrapper for frappe-charts</Title>
-    </Header>
-    { Types.map((x) => (
-      <Graph
-        {...{ title: `${x[0].toUpperCase() + x.substring(1)} chart`,
-          type: x,
-          key: x,
-          data: ExampleData, onSelect: () => console.log('Selected element!') }}
-      />
-    ))}
-  </Root>
+const CreateExampleData = () => (
+  { labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    datasets: [{
+      name: 'Commits',
+      chartType: 'bar',
+      values: randomData(),
+    },
+    {
+      name: 'Coffees',
+      chartType: 'line',
+      values: randomData(),
+    }] }
 );
+
+const Types = ['bar', 'pie', 'percentage'];
+
+const App = () => {
+  const [data, SetData] = useState(CreateExampleData());
+
+  const updateValues = () => {
+    SetData(CreateExampleData());
+    console.log(data);
+  };
+
+  return (
+    <Root>
+      <Header>
+        <Title>React Wrapper for frappe-charts</Title>
+      </Header>
+      <button {...{ onClick: () => updateValues(), type: 'button' }}>
+        Update data !
+      </button>
+      { Types.map((x) => (
+        <Graph
+          {...{ title: `${x[0].toUpperCase() + x.substring(1)} chart`,
+            type: x,
+            key: x,
+            data }}
+        />
+      ))}
+    </Root>
+  );
+};
 
 const Root = styled.div`
 text-align: center;
